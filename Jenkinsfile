@@ -1,23 +1,18 @@
-pipeline {
-    agent {
-        docker {
-            def app
+node{
+    checkout scm
+    def app
 
-                stage('Clone') {
-                  checkout scm
-                }
- 
-                stage('Build image') {
-                   app = docker.build("webapp:2.0")
-                }
+        stage('Build image') {
+          app = docker.build("webapp:2.0")
+        }   
 
-                stage('Run image') {
-                   docker.image('webapp:2.0').withRun('-p 80:80') { c ->
-                }
-                }
-                
+        stage('Run image') {
+          docker.image("webapp:2.0").withRun('-p 80:80') { c ->
+          sh 'docker ps'
+          sh 'curl localhost'
 
         }
-    }         
-}    
 
+        }
+    
+}
