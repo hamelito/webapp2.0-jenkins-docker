@@ -19,11 +19,7 @@ pipeline {
                 }
             }
         }
-        stage('Test'){
-            steps {
-                 echo 'Empty'
-            }
-        }
+        
     }
         
 }
