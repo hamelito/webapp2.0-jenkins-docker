@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    
     options {
         skipStagesAfterUnstable()
     }
@@ -30,21 +31,11 @@ pipeline {
             }
         }
 
-        stage('Run') { 
-            steps { 
-                script{
-                docker.image('webapp.image:2.0').withRun('-p 80:80')
-                }
-            }
-        }
+        stage('Run') {
+        docker.image('webapp.image:2.0').withRun('-p 80:80') { c ->
 
-        stage('Test') { 
-            steps { 
-                script{
-                 sh 'docker ps'
-                }
-            }
+            sh 'docker ps'
         }
- 
-    }
+        }
+    }    
 }
