@@ -3,8 +3,10 @@ pipeline {
     options {
         skipStagesAfterUnstable()
     }
+
     stages {
-         stage('Clone repository') { 
+
+        stage('Clone repository') { 
             steps { 
                 script{
                 checkout scm
@@ -15,10 +17,34 @@ pipeline {
         stage('Build') { 
             steps { 
                 script{
-                 app = docker.build("underwater")
+                 app = docker.build('webapp.image:2.0')
                 }
             }
         }
-    
+
+        stage('Image') { 
+            steps { 
+                script{
+                 sh 'docker images'
+                }
+            }
+        }
+
+        stage('Run') { 
+            steps { 
+                script{
+                docker.image('webapp.image:2.0').withRun('-p 80:80')
+                }
+            }
+        }
+
+        stage('Test') { 
+            steps { 
+                script{
+                 sh 'docker ps'
+                }
+            }
+        }
+ 
     }
 }
