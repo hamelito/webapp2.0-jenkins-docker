@@ -19,11 +19,6 @@ pipeline {
                 }
             }
         }
-        stage('Test'){
-            steps {
-                 sh "docker images"
-            }
-        }
-        
+    
     }
 }
