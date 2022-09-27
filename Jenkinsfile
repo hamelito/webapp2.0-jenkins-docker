@@ -34,7 +34,7 @@ pipeline {
         stage('Run') {
             steps {
                 script{
-                  app = docker.image('webapp.image:2.0').withRun('-p 80:80 -d') { c ->
+                  app = docker.image('webapp.image:2.0').withRun('-it -d -p 80:80') { c ->
                   sh 'docker ps' 
                   }
                 }
