@@ -1,23 +1,29 @@
-node{
-  def app
-
-    stage('Clone') {
-        checkout scm
+pipeline {
+    agent any
+    options {
+        skipStagesAfterUnstable()
     }
+    stages {
+         stage('Clone repository') { 
+            steps { 
+                script{
+                checkout scm
+                }
+            }
+        }
 
-    stage('Build image') {
-        app = docker.build("xavki/nginx")
+        stage('Build') { 
+            steps { 
+                script{
+                 app = docker.build("underwater")
+                }
+            }
+        }
+        stage('Test'){
+            steps {
+                 echo 'Empty'
+            }
+        }
     }
-
-    stage('Run image') {
-        docker.image('xavki/nginx').withRun('-p 80:80') { c ->
-
-        sh 'docker ps'
-
-        sh 'curl localhost'
-
-    }
-
-    }
-    
+        
 }
